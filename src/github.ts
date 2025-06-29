@@ -1,7 +1,6 @@
 import { context, getOctokit } from '@actions/github';
 import * as core from '@actions/core';
 import { Await } from './ts';
-import { createAppAuth } from "@octokit/auth-app";
 
 let octokitSingleton: ReturnType<typeof getOctokit>;
 
@@ -17,6 +16,7 @@ type Tag = {
 };
 
 export async function getOctokitSingleton() {
+  const { createAppAuth } = await import("@octokit/auth-app");
   const auth = createAppAuth({
     privateKey: process.env.PRIVATE_KEY || '',
     clientId: process.env.CLIENT_ID || '',
